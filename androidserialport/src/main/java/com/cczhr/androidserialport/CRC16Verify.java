@@ -46,7 +46,7 @@ public class CRC16Verify {
     /**
      * 查表法计算 CRC-16
      *
-     * @param data 代计算的字节
+     * @param data 待计算的字节
      */
     private static int crcVal(byte[] data) {
         int Index;
@@ -64,7 +64,7 @@ public class CRC16Verify {
     /**
      * 计算crc16
      *
-     * @param data 代计算的字节
+     * @param data 待计算的字节
      * @return crc byte[]
      */
     public static byte[] calcCrcBytes(byte[] data) {
