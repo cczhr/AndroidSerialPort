@@ -13,7 +13,7 @@ import com.anthonycr.grant.PermissionsResultAction;
 public class MainActivity extends AppCompatActivity {
     private Button btn1;
     private Button btn2;
-
+    private int data=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
         testAOP("kkkkkkkkkkkk");
-
+        getMessage("444");
 
     }
 

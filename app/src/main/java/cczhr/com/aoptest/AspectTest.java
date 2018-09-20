@@ -5,6 +5,7 @@ import android.util.Log;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -60,5 +61,25 @@ public class AspectTest {
         Log.d(TAG, "$$$$$$$$$$$$$$$$$$onDebugToolMethodBefore: " + key);
         joinPoint.proceed();
     }
+
+
+
+    @Pointcut("get(int cczhr.com.aoptest.MainActivity.data)")
+    public void fieldget() {}
+    @Around("fieldget()")
+    public int fieldget(ProceedingJoinPoint thisJoinPoint) throws Throwable {
+        Object proceed = thisJoinPoint.proceed();
+        Log.d(TAG,thisJoinPoint.toLongString());
+        Log.d(TAG, thisJoinPoint.getSignature().getName());
+        Log.d(TAG,"--->"+proceed);
+        return (int) proceed; //必须return 否则报错（applying to join point that doesn't return void: field-get）
+    }
+   /* @AfterReturning(pointcut = "fieldget()",returning = "data")
+    public void  fieldget2(JoinPoint joinPoint,int data){
+        Log.e("zoudong", "fieldget2====" + "joinPoint = [" + joinPoint + "], data = [" + data + "]");
+        // 不能使用return
+    }*/
+
+
 
 }
