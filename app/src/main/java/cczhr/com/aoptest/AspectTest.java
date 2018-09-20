@@ -9,6 +9,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 
 @Aspect
 public class AspectTest {
@@ -37,14 +38,27 @@ public class AspectTest {
           proceedingJoinPoint.proceed();
           Log.d(TAG, "--------------------onActivityMethodAroundSecond: " + key);
       }*/
-    @Pointcut("execution(@cczhr.com.aoptest.DebugTool * *(..))")
-    public void DebugToolMethod() {
+    @Pointcut("execution(@cczhr.com.aoptest.DebugTool * *(..))&& @annotation(debugTool)")  //@annotation(debugTool)用来表示debugTool参数是注解类型
+    public void DebugToolMethod(DebugTool debugTool) {
     }
 
-    @Before("DebugToolMethod()")
-    public void onDebugToolMethodBefore(JoinPoint joinPoint) throws Throwable {
+
+   // @Around 会替换原先执行的代码，但如果你仍然希望执行原先的代码，可以使用joinPoint.proceed()。
+   @Around("DebugToolMethod(debugTool)")
+    public void onDebugToolMethodBefore(ProceedingJoinPoint joinPoint,DebugTool debugTool) throws Throwable {
+     //  Log.e(TAG, "before->" + joinPoint.getTarget().toString() + "#" + joinPoint.getSignature().getName());
+
+
         String key = joinPoint.getSignature().toString();
+        Object[] args = joinPoint.getArgs();
+        for (int i = 0; i < args.length; i++) {
+            Log.d(TAG, "第" + (i + 1) + "个参数为:" + args[i]);
+
+        }
+
+        Log.d(TAG, "$$$$$$$$$$$$$$$$$$onDebugToolMethodBefore注解: " + debugTool.resourceId());
         Log.d(TAG, "$$$$$$$$$$$$$$$$$$onDebugToolMethodBefore: " + key);
+        joinPoint.proceed();
     }
 
 }
