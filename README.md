@@ -1,6 +1,6 @@
 [![](https://img.shields.io/badge/androidserialport-1.0.0-brightgreen.svg)](https://bintray.com/cczhr/android-serialport/AndroidSerialPort)
-# AopTest
-Android AOP编程以及Android串口库
+# AndroidSerialPort
+Android串口封装
 ## Android串口使用例子
 在app build.gradle中添加
 ```xml
