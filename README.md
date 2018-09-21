@@ -2,11 +2,17 @@
 # AopTest
 Android AOP编程以及Android串口库
 ## Android串口使用例子
+在appbuild.gradle中添加
+```xml
+implementation 'com.cczhr:androidserialport:1.0.0'
+```
 ```java
 获取串口设备
 ComControl.getDeviceList()
 获取常用波特率
 ComControl.getBaudrateList()
+修改su路径 默认为/system/bin/su
+ComControl.setsSuPath("/system/xbin/su");
 
 ComControl comControl=new ComControl("/dev/ttySAC3",9600);
   if(comControl.openCOM()){
@@ -20,4 +26,10 @@ comControl.setOnDataReceiverListener(new OnDataReceiverListener() {
                   //收到的数据
     }
   });
+ 设置线程休眠时间减少cpu占用 默认1毫秒
+ comControl.setmSleep(100);
+ 发送数据
+ comControl.sendData(bytes);
+ 关闭串口
+ comControl.closeCOM();
 ```
