@@ -4,7 +4,7 @@ Android串口封装
 ## Android串口使用例子
 在app build.gradle中添加
 ```xml
-implementation 'com.cczhr:androidserialport:1.0.0'
+implementation 'com.cczhr:androidserialport:1.0.1'
 ```
 ```java
 获取串口设备
