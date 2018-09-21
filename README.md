@@ -2,7 +2,7 @@
 # AopTest
 Android AOP编程以及Android串口库
 ## Android串口使用例子
-在appbuild.gradle中添加
+在app build.gradle中添加
 ```xml
 implementation 'com.cczhr:androidserialport:1.0.0'
 ```
