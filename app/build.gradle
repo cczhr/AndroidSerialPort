@@ -1,9 +1,8 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.hujiang.android-aspectjx'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "cczhr.com.aoptest"
+        applicationId "com.cczhr.serialportdemo"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
@@ -25,6 +24,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation 'com.anthonycr.grant:permissions:1.1.2'
     implementation project(':androidserialport')
 }

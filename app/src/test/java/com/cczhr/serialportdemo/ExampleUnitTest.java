@@ -1,4 +1,4 @@
-package cczhr.com.aoptest;
+package com.cczhr.serialportdemo;
 
 import org.junit.Test;
 
