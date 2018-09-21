@@ -1,11 +1,6 @@
 package com.cczhr.androidserialport;
 
-/**
- * @author Rair
- * @date 2017/9/24.
- * <p>
- * desc:CRC16校验
- */
+
 public class CRC16Verify {
 
     private static char[] CrcTbl = {

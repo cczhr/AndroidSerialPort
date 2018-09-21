@@ -5,27 +5,29 @@ import android.util.Log;
 
 
 import com.cczhr.androidserialport.OnDataReceiverListener;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class MachineControl {
+public class ComControl {
 
-    private static final String TAG = "MachineControl";
+    private static final String TAG = "ComControl";
 
-    private SerialPortFinder mSerialPortFinder;
-
+    private static final String DEFAULT_SU_PATH = "/system/bin/su";
+    private static String sSuPath = DEFAULT_SU_PATH;
+    private static final int SLEEP = 1;
+    private  int mSleep = SLEEP;
     private String mDeviceName;
     private int mBaudRate;
     private SerialPort mSerialPort;
-
     private OutputStream mOutputStream;
     private InputStream mInputStream;
     private ReadCOMThread mReadCOMThread;
 
     private OnDataReceiverListener onDataReceiverListener;
+
+    private static final int[] BAUDRATES={110,300,600,1200,2400,4800,9600,14400,19200,38400,56000,57600,115200,128000,256000};
 
     /**
      * 机器控制
@@ -35,20 +37,43 @@ public class MachineControl {
      *                 <p>
      *                 例如 devName = "/dev/ttyS3"，baudRate =9600。
      */
-    public MachineControl(String devName, int baudRate) {
-        mSerialPortFinder = new SerialPortFinder();
+    public ComControl(String devName, int baudRate) {
+
         mDeviceName = devName;
         mBaudRate = baudRate;
         mSerialPort = null;
     }
 
     /**
-     * 枚举所有串口的设备名。
-     *
-     * @return 串口的设备名数组
+     * 设置线程空闲休眠时间 减少cpu占用
+     * @param mSleep
      */
-    private String[] getCOMList() {
-        return mSerialPortFinder.getAllDevicesPath();
+    public void setmSleep(int mSleep) {
+        this.mSleep = mSleep;
+    }
+
+    /**
+     * 获取所有串口设备名
+     * @return 设备名数组
+     */
+    public static String[] getDeviceList() {
+        return new SerialPortFinder().getAllDevicesPath();
+    }
+
+    /**
+     * 获取常用波特率
+     * @return 波特率数组
+     */
+    public static int[] getBaudrateList() {
+        return BAUDRATES;
+    }
+
+    /**
+     * 设置su路径
+     *
+     */
+    public static void setsSuPath(String sSuPath) {
+        ComControl.sSuPath = sSuPath;
     }
 
     /**
@@ -57,13 +82,9 @@ public class MachineControl {
      * @return 是否成功
      */
     public boolean openCOM() {
-        String[] comList = getCOMList();
-        for (String comname : comList) {
-            Log.i(TAG, "所有串口设备名：" + comname);
-        }
         if (mSerialPort == null) {
             try {
-                mSerialPort = new SerialPort(new File(mDeviceName), mBaudRate, 0);
+                mSerialPort = new SerialPort(new File(mDeviceName), mBaudRate, 0,sSuPath);
                 mOutputStream = mSerialPort.getOutputStream();
                 mInputStream = mSerialPort.getInputStream();
                 // 开启读取串口数据线程
@@ -96,7 +117,7 @@ public class MachineControl {
      * @param data 报文
      * @return 是否成功
      */
-    public boolean sendCMD(byte[] data) {
+    public boolean sendData(byte[] data) {
         try {
             if (mOutputStream != null) {
                 mOutputStream.write(data);
@@ -133,7 +154,7 @@ public class MachineControl {
                         }
                     }
                     else {
-                        SystemClock.sleep(1);
+                        SystemClock.sleep(mSleep);
                     }
                 } catch (IOException e) {
                     Log.i(TAG, e.getMessage());

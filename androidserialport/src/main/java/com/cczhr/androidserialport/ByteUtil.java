@@ -68,7 +68,7 @@ public class ByteUtil {
         return (byte) Integer.parseInt(inHex, 16);
     }
     /**
-     * 16进制字符串转int
+     * 16进制字符串转十进制int
      *
      * @param hexString 字符串
      * @return int
@@ -77,27 +77,12 @@ public class ByteUtil {
         return Integer.parseInt(hexString, 16);
     }
 
-    /**
-     * byte数组异或
-     * @param datas
-     * @return
-     */
-    public static byte getXor(byte[] datas){
-
-        byte temp=datas[0];
-
-        for (int i = 1; i <datas.length; i++) {
-            temp ^=datas[i];
-        }
-
-        return temp;
-    }
 
     /**
      * 截取byte数组
-     * @param src
-     * @param begin
-     * @param count
+     * @param src    源数组
+     * @param begin  开始截取部分 包含自己
+     * @param count  截取数量
      * @return
      */
     public static byte[] subBytes(byte[] src, int begin, int count) {
@@ -123,35 +108,17 @@ public class ByteUtil {
      * @return
      */
     public static byte[] listTobyte(List<Byte> list) {
-
-        byte[] bytes= toArray(list);
-
-        return bytes;
-
-    }
-
-
-    private static byte[] toArray(Collection<? extends Number> collection) {
-
-        Object[] boxedArray = collection.toArray();
+        Object[] boxedArray = list.toArray();
         int len = boxedArray.length;
         byte[] array = new byte[len];
         for (int i = 0; i < len; i++) {
-            // checkNotNull for GWT (do not optimize)
-            array[i] = ((Number) checkNotNull(boxedArray[i])).byteValue();
+            if(boxedArray[i]==null){
+                throw new NullPointerException();
+            }
+            array[i] = ((Number) boxedArray[i]).byteValue();
         }
         return array;
     }
-
-    private static <T> T checkNotNull(T reference) {
-        if (reference == null) {
-            throw new NullPointerException();
-        }
-        return reference;
-    }
-
-
-
 
 
     /**
@@ -197,7 +164,7 @@ public class ByteUtil {
 
 
     /**
-     * int转byte
+     * 十进制int转bytes数组
      * @param num
      * @return
      */

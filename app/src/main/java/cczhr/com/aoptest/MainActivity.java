@@ -1,14 +1,13 @@
 package cczhr.com.aoptest;
 
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 
-import com.anthonycr.grant.PermissionsManager;
-import com.anthonycr.grant.PermissionsResultAction;
+import com.cczhr.androidserialport.OnDataReceiverListener;
+
+import android_serialport_api.ComControl;
 
 public class MainActivity extends AppCompatActivity {
     private Button btn1;
@@ -38,6 +37,31 @@ public class MainActivity extends AppCompatActivity {
         });*/
         testAOP("kkkkkkkkkkkk");
         getMessage("444");
+        for(String com:ComControl.getDeviceList()){
+            Log.e("串口", com );
+        }
+
+        ComControl.setsSuPath("/system/xbin/su");
+        ComControl comControl=new ComControl("/dev/ttySAC3",9600);
+
+        if(comControl.openCOM()){
+            //打开串口成功
+
+        }else {
+            //打开串口失败
+        }
+
+        comControl.setmSleep(100);
+        comControl.setOnDataReceiverListener(new OnDataReceiverListener() {
+            @Override
+            public void onDataReceiver(byte[] buffer, int size) {
+                //收到的数据
+            }
+        });
+        byte[] bytes={0x00};
+        comControl.sendData(bytes);
+
+
 
     }
 

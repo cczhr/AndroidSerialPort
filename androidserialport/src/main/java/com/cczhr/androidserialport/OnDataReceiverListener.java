@@ -1,11 +1,6 @@
 package com.cczhr.androidserialport;
 
-/**
- * @author Rair
- * @date 2017/10/25
- * <p>
- * desc:数据接收回调
- */
+
 
 public interface OnDataReceiverListener {
 

@@ -1,5 +1,6 @@
 package android_serialport_api;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.File;
@@ -13,6 +14,10 @@ import java.io.OutputStream;
 public class SerialPort {
 
     private static final String TAG = "SerialPort";
+
+
+
+
     /**
      * 不要删除或重命名字段mFd:原生方法close()使用了该字段
      */
@@ -20,18 +25,15 @@ public class SerialPort {
     private FileInputStream mFileInputStream;
     private FileOutputStream mFileOutputStream;
 
-    static {
-        System.loadLibrary("serial_port");
-    }
 
-    public SerialPort(File device, int baudrate, int flags) throws SecurityException, IOException {
+    public SerialPort(File device, int baudrate, int flags,String sSuPath) throws SecurityException, IOException {
 
         /* 检查访问权限 */
         if (!device.canRead() || !device.canWrite()) {
             try {
                 /* 没有读/写权限，尝试对文件进行提权 */
-                Process su = Runtime.getRuntime().exec("/system/bin/su");
-                String cmd = "chmod 777 " + device.getAbsolutePath() + "\n" + "exit\n";
+                Process su = Runtime.getRuntime().exec(sSuPath);
+                String cmd = "chmod 666 " + device.getAbsolutePath() + "\n" + "exit\n";
                 su.getOutputStream().write(cmd.getBytes());
                 if ((su.waitFor() != 0) || !device.canRead() || !device.canWrite()) {
                     throw new SecurityException();
@@ -50,6 +52,7 @@ public class SerialPort {
         mFileOutputStream = new FileOutputStream(mFd);
     }
 
+
     /**
      * 打开串口
      *
@@ -65,6 +68,11 @@ public class SerialPort {
      */
     public native void close();
 
+    static {
+        System.loadLibrary("serial_port");
+    }
+
+
     /**
      * 获取输入输出流
      */
@@ -75,6 +83,10 @@ public class SerialPort {
     public OutputStream getOutputStream() {
         return mFileOutputStream;
     }
+
+
+
+
 
     /**
      * 关闭IO流

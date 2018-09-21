@@ -9,7 +9,7 @@ import java.util.Vector;
 
 public class SerialPortFinder {
 
-    private static final String TAG = "SerialPort";
+    private static final String TAG = "SerialPortFinder";
 
     private Vector<Driver> mDrivers;
 
