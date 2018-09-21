@@ -1,7 +1,7 @@
 [![](https://img.shields.io/badge/androidserialport-1.0.0-brightgreen.svg)](https://bintray.com/cczhr/android-serialport/AndroidSerialPort)
 # AopTest
 Android AOP编程以及Android串口库
-# 串口库使用例子
+## Android串口使用例子
 ```java
 获取串口设备
 ComControl.getDeviceList()
