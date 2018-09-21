@@ -1,4 +1,4 @@
-[![](https://img.shields.io/badge/androidserialport-1.0.0-brightgreen.svg)](https://bintray.com/cczhr/android-serialport/AndroidSerialPort)
+[![](https://img.shields.io/badge/androidserialport-1.0.1-brightgreen.svg)](https://bintray.com/cczhr/android-serialport/AndroidSerialPort)
 # AndroidSerialPort
 Android串口封装
 ## Android串口使用例子
