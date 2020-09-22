@@ -5,6 +5,7 @@ import android.util.Log;
 
 
 import com.cczhr.androidserialport.OnDataReceiverListener;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -106,7 +107,8 @@ public class ComControl {
                 mReadCOMThread.start();
                 return true;
             } catch (Exception e) {
-                Log.i(TAG, e.getMessage());
+                if (e.getMessage() != null)
+                    Log.i(TAG, e.getMessage());
                 mSerialPort = null;
             }
         }
